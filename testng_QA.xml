@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MagMutualSuite" parallel="methods" thread-count="1">
+	<listeners>
+		<listener class-name="com.mm.listeners.testListners" />
+		<listener class-name="com.mm.listeners.AnnotationTransform" />
+	</listeners>
+	
+	<test name="Test" parallel="methods" thread-count="1">
+		<groups>
+			<run>
+				<include name="QA Smoke Test" />
+			</run>
+		</groups>
+		<classes>
+			<class name="MMTestCase.QA" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
