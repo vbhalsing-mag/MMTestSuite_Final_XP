@@ -637,7 +637,7 @@ public class RateApolicyPage extends CommonAction {
         sleep(1000);
         selectDropdownByValue(driver, policyAction, rateApolicyPageDTO.valueOfPolicyActionBillingSetup,
                 "Policy Action");
-        sleep(6000);
+        sleep(8000);
         invisibilityOfLoader(driver);
         switchToFrameUsingElement(driver,
                 driver.findElement(By.xpath("//iframe[contains(@src,'policyNo=" + policyNo + "')]")));
@@ -649,9 +649,9 @@ public class RateApolicyPage extends CommonAction {
         sleep(2000);
         ExtentReporter.logger.log(LogStatus.INFO, "Click [Save] Billing account is setup");
         clickButton(driver, billingSetupSaveBtn, "Save Button");
-        sleep(15000);
-        invisibilityOfLoader(driver);
+        sleep(3000);
         switchToParentWindowfromframe(driver);
+        sleep(15000);
         visibilityOfElement(driver, rateBtn, "Rate Button");
         return new RateApolicyPage(driver);
     }

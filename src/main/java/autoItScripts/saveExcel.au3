@@ -14,6 +14,7 @@ Func saveExcel()
 	send("{ENTER}")
 	Sleep(3000)
 	WinWaitActive("Save As")
+	Sleep(2000)
 	ControlSend("Save As","","Edit1","C:\TempsaveExcel\OnDemandInvoiceCredit.xlsx");
 	Sleep(2000)
 	ControlClick("Save As","&Save","Button1")

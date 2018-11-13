@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -36,6 +38,7 @@ import com.mm.pages.PolicyQuotePage;
 import com.mm.pages.PolicySubmissionPage;
 import com.mm.pages.RateApolicyPage;
 import com.mm.utils.CommonAction;
+import com.mm.utils.CommonUtilities;
 import com.mm.utils.ExcelUtil;
 import com.mm.utils.ExtentReporter;
 import com.mm.utils.IntegrateRallyRestAPI;
@@ -98,8 +101,9 @@ public class BTS extends ExtentReporter {
 
     // Extent report initialization before every test case.
     @BeforeMethod(alwaysRun = true)
-    public void Setup(Method method) throws Exception {
+    public void Setup(Method method)   {
 
+        try {
         Process processkillpdf = Runtime.getRuntime()
                 .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");
         Process processkillIE = Runtime.getRuntime()
@@ -110,7 +114,12 @@ public class BTS extends ExtentReporter {
                 .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM Excel.exe");
         Process processkillImageRight = Runtime.getRuntime().exec(
                 "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM imageright.desktop.exe");
-
+        Process processkillIEDriverServer = Runtime.getRuntime().exec(
+                "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /T /IM IEDriverServer.exe");
+        processkillIEDriverServer.waitFor();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
         // This code will create file storage folders if not exists already.
         verifyFolderExistOrNot("TempsaveExcel");
         verifyFolderExistOrNot("savePDF");
@@ -147,8 +156,8 @@ public class BTS extends ExtentReporter {
         CommonAction.url = applicationUrl;// "http://oasiscloud2017t:8081/oas17bts/CS/login.jsp";
     }
 
-    @Test(description = "Rate a policy that existed before the change or deployment to confirm it still displays as expected", groups = {
-            "BTS Smoke Test" }, priority = 0, alwaysRun = true)
+    /*@Test(description = "Rate a policy that existed before the change or deployment to confirm it still displays as expected", groups = {
+            "BTS Smoke Test" }, priority = 0, alwaysRun = true)*/
 
     public void TC42239() {
         LoginPageDTO lpDTO = new LoginPageDTO(TestCaseDetails.testDataDictionary);
@@ -160,9 +169,9 @@ public class BTS extends ExtentReporter {
         rateapolicyPage.rateFunctionality(policyNum);
     }
 
-    @Test(description = "This test case will cover smoke test for Hospital(BTS) CIS\r\n" + "Verify CIS opens \r\n"
+   /* @Test(description = "This test case will cover smoke test for Hospital(BTS) CIS\r\n" + "Verify CIS opens \r\n"
             + "Search an entity/person\r\n"
-            + "Navigate through the CIS screens", groups = { "BTS Smoke Test" }, priority = 1, alwaysRun = true)
+            + "Navigate through the CIS screens", groups = { "BTS Smoke Test" }, priority = 1, alwaysRun = true)*/
 
     public void TC42253() {
         LoginPageDTO lpDTO = new LoginPageDTO(TestCaseDetails.testDataDictionary);
@@ -218,6 +227,7 @@ public class BTS extends ExtentReporter {
     public void TC42238() {
         LoginPageDTO lpDTO;
         LoginPage loginpage;
+        
         RateApolicyPage rateapolicyPage = new RateApolicyPage(driver);
         PolicyQuotePage policyquotepage = new PolicyQuotePage(driver);
         ExcelUtil exlUtil = new ExcelUtil();
@@ -229,9 +239,10 @@ public class BTS extends ExtentReporter {
                 .changePolicyPhase(policyquotepagedto.quotePhaseValue).coverageDetailsSelect();
         String policyNumber = policyquotepage.policyNo();
         rateapolicyPage.coverageUpdates(policyNumber);
-        exlUtil.writeData("TC42242", "PolicyNum", policyNumber, 1, ExcelPath);
+        CommonUtilities.resetZoomLevel(driver);
         policyquotepage.rateFunctionalityWithoutPremiumVerification(policyNumber).clickPreviewTab(policyNumber)
                 .savePDF(testcaseFormattedID).verifyPdfContent(testcaseFormattedID).saveOption(policyNumber);
+        exlUtil.writeData("TC42242", "PolicyNum", policyNumber, 1, ExcelPath);
     }
 
     @Test(description = "QA Hospital Binder", groups = { "BTS Smoke Test" }, priority = 5, alwaysRun = true)

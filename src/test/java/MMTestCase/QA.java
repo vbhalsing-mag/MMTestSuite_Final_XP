@@ -36,6 +36,7 @@ import com.mm.pages.PolicyQuotePage;
 import com.mm.pages.PolicySubmissionPage;
 import com.mm.pages.RateApolicyPage;
 import com.mm.utils.CommonAction;
+import com.mm.utils.CommonUtilities;
 import com.mm.utils.ExcelUtil;
 import com.mm.utils.ExtentReporter;
 import com.mm.utils.IntegrateRallyRestAPI;
@@ -97,8 +98,8 @@ public class QA extends ExtentReporter {
 
     // Extent report initialization before every test case.
     @BeforeMethod(alwaysRun = true)
-    public void Setup(Method method) throws Exception {
-
+    public void Setup(Method method)   {
+        try {
         Process processkillpdf = Runtime.getRuntime()
                 .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");
         Process processkillIE = Runtime.getRuntime()
@@ -109,6 +110,12 @@ public class QA extends ExtentReporter {
                 .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM Excel.exe");
         Process processkillImageRight = Runtime.getRuntime().exec(
                 "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM imageright.desktop.exe");
+        Process processkillIEDriverServer = Runtime.getRuntime().exec(
+                "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /T /IM IEDriverServer.exe");
+        processkillIEDriverServer.waitFor();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
 
         // This code will create file storage folders if not exists already.
         verifyFolderExistOrNot("TempsaveExcel");
@@ -341,7 +348,6 @@ public class QA extends ExtentReporter {
             } else if (indicationPageDTO.riskTypeValue.get(i).equals("Dentist")) {
                 policyIndicationPage.openLimitSharingTab(policyNo).addSharedGroup(policyNo).closeLimitSharingtab();
             }
-
             policyIndicationPage.selectRiskTab()
                     .selectRiskTypeFromPopupWindowAndSelectEntity(policyNo, indicationPageDTO.riskTypeValue.get(i),
                             indicationPageDTO.riskEntityName.get(i))
@@ -350,13 +356,13 @@ public class QA extends ExtentReporter {
                     .selectCoverageTab().selectCoverageFromCoverageList()
                     .addRetroactiveDate(indicationPageDTO.riskTypeValue.get(i));
         }
-        rateapolicypage.rateFunctionality(policyNo).saveOptionOfficial(policyNo);
-        rateapolicypage.AcceptFromActionDropDown().isAlertPresent().identifyPhase(indicationPageDTO.policyPhaseValue)
+        rateapolicypage.rateFunctionalityWithoutPremiumAmountVerification(policyNo).saveOptionOfficial(policyNo);
+        rateapolicypage.AcceptFromActionDropDown().isAlertPresent().identifyPhase(indicationPageDTO.policyPhaseValueBinder)
                 .billingSetup().refreshCurrentPage(driver);
         String policyNum = policyBinderPage.policyNo();
         rateapolicypage.rateFunctionality(policyNum).saveOptionOfficial(policyNum);
         rateapolicypage.policyEndorsementwithoutBackupPolicy(policyNum)
-                .identifyPhase(indicationPageDTO.policyPhaseValue2).rateFunctionality(policyNum)
+                .identifyPhase(indicationPageDTO.policyPhaseValuePolicy).rateFunctionalityWithoutPremiumAmountVerification(policyNum)
                 .clickPreviewTab(policyNum).savePDF(testcaseFormattedID);
         policyQuotePage.saveOptionOfficial(policyNum);
     }
@@ -433,9 +439,10 @@ public class QA extends ExtentReporter {
                 .changePolicyPhase(policyquotepagedto.quotePhaseValue).coverageDetailsSelect();
         String policyNumber = policyquotepage.policyNo();
         rateapolicyPage.coverageUpdates(policyNumber);
-        exlUtil.writeData("TC43770", "PolicyNum", policyNumber, 1, ExcelPath);
+        CommonUtilities.resetZoomLevel(driver);
         policyquotepage.rateFunctionalityWithoutPremiumVerification(policyNumber).clickPreviewTab(policyNumber)
                 .savePDF(testcaseFormattedID).verifyPdfContent(testcaseFormattedID).saveOption(policyNumber);
+        exlUtil.writeData("TC43770", "PolicyNum", policyNumber, 1, ExcelPath);
     }
 
     @Test(description = "QA Hospital Binder", groups = { "QA Smoke Test" }, priority = 5, alwaysRun = true)
@@ -699,7 +706,7 @@ public class QA extends ExtentReporter {
          */
         ExtentReporter.report.close();
         if (driver != null) {
-            driver.quit();
+        driver.quit();
         }
     }
 }

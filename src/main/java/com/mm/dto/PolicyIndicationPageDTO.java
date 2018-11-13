@@ -35,6 +35,8 @@ public class PolicyIndicationPageDTO {
     public String stateCodeValue;
     public String policyPhaseValue;
     public String policyPhaseValue2;
+    public String policyPhaseValueBinder;
+    public String policyPhaseValuePolicy;
 
     // This method will access DTO Code.
     public PolicyIndicationPageDTO(Map<String, List<String>> excelData)

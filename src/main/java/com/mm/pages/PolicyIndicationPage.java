@@ -501,7 +501,7 @@ public class PolicyIndicationPage extends CommonAction {
     public PolicyIndicationPage addRiskInformation(String riskCountyValue, String riskSpecialityValue,
             String riskTypeValueFromDataSheet, String fteTypeValue) {
 
-        sleep(5000);
+        sleep(6000);
         ExtentReporter.logger.log(LogStatus.INFO, "Select Risk. Verify Hospital Risk is highlighted");
         List<WebElement> availableRiskTypeList = driver
                 .findElements(By.xpath("//td//div[@id='CRISKTYPECODELOVLABEL']"));
@@ -546,7 +546,7 @@ public class PolicyIndicationPage extends CommonAction {
                         + ", Specialty = " + riskSpecialityValue
                         + ". Verify Risk information is displayed and selected");
         // Select Risk County and Risk specialty using DDL
-        sleep(4000);
+        sleep(5000);
         selectDropdownByValue(driver, stateCode, hospitalIndicationDTO.stateCodeValue, "State");
         sleep(3000);
         selectDropdownByValue(driver, riskCounty, riskCountyValue, "Risk County");
@@ -633,6 +633,7 @@ public class PolicyIndicationPage extends CommonAction {
                 clickButton(driver, nextPageForRiskTypeList, "Next Page Arrow");
                 sleep(3000);
             }
+            //Search and select riskType from pop up
             for (int j = 0; j < riskTypeList.size(); j++) {
 
                 String riskTypeFromApplication = riskTypeList.get(j).getAttribute("innerHTML").trim();
@@ -643,6 +644,7 @@ public class PolicyIndicationPage extends CommonAction {
                         ExtentReporter.logger.log(LogStatus.INFO, "Select " + riskTypeFromDataFile
                                 + ". Click Select Entity Select Search window pops up");
                         selectValue(driver, riskTypeList.get(j), riskTypeFromDataFile);
+                        sleep(1000);
                         ExtentReporter.logger.log(LogStatus.PASS,
                                 riskTypeFromDataFile + " is selected from Risk Type List");
                         clickButton(driver, selectRiskTypeButton, "Select");
@@ -651,6 +653,7 @@ public class PolicyIndicationPage extends CommonAction {
                         break;
                     } else {
                         selectValue(driver, riskTypeList.get(j), riskTypeFromDataFile);
+                        sleep(1000);
                         ExtentReporter.logger.log(LogStatus.PASS,
                                 riskTypeFromDataFile + " is selected from Risk Type List");
                         clickButton(driver, selectRiskTypeButton, "Select");
