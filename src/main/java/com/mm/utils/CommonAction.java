@@ -690,7 +690,7 @@ public class CommonAction implements CommonActionInterface {
 
     public void saveOption(WebDriver driver, WebElement saveOptionBtn, WebElement saveAsDropDown, WebElement saveOKBtn,
             WebElement exitOK, String saveAsValue, String policyNo) {
-
+        // Added PDF process kill because it causes error sometimes
         try {
             Process processkillpdf = Runtime.getRuntime()
                     .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");

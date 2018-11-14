@@ -80,7 +80,7 @@ public class FinancePage extends CommonAction {
     @FindBy(xpath = "//input[@name='search']")
     WebElement mainSearchBtn;
 
-    @FindBy(id = "findPolicyListGrid_CPOLICYNO_0_HREF") // QA
+    @FindBy(id = "findPolicyListGrid_CPOLICYNO_0_HREF")
     WebElement policyList;
 
     @FindBy(name = "policyNo")
@@ -563,13 +563,11 @@ public class FinancePage extends CommonAction {
         accountNumber = accountNo.getAttribute("innerHTML");
         ExtentReporter.logger.log(LogStatus.INFO, "Click [Process].");
         clickButton(driver, processButton, "Process");
-        sleep(40000);
+        sleep(50000); // Need this much time when application is slow
         invisibilityOfLoader(driver);
 
         switchToFrameUsingElement(driver,
                 driver.findElement(By.xpath("//iframe[contains(@src,'&accountNo=" + accountNumber + "')]")));
-
-        // TODO-visibilityOfElement(driver, jumpButton, "jump button");
 
         invoiceAmount = invoiceAmt.getAttribute("innerHTML");
         ExtentReporter.logger.log(LogStatus.INFO, "Click [Jump].");
@@ -967,7 +965,7 @@ public class FinancePage extends CommonAction {
         /*
          * Assert.assertTrue(currBalOnAllTxnEnqPage.getAttribute("innerHTML").
          * equals( financePageDTO.currunetBalance),
-         * "Current Balance is not zero on All transaction enquirey Page");
+         * "Current Balance is not zero on All transaction inquiry Page");
          */
         return new FinancePage(driver);
     }

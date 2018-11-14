@@ -79,7 +79,6 @@ public class PolicyBinderPage extends CommonAction {
     WebElement okPolicySaveAsWIPPopup;
 
     @FindBy(xpath = "//div[@class='horizontalButtonCollection'][1]//input[@value='Save Options'][1]")
-    // @FindBy(xpath = "//input[@id = 'PM_COMMON_TABS_SAVE']")
     WebElement saveOptionBtn;
 
     @FindBy(xpath = "//select[@name='saveAsCode']")
@@ -239,17 +238,6 @@ public class PolicyBinderPage extends CommonAction {
                 "Insured Name is not populated on 'Entity Select List' page.");
         click(driver, selectEntityChkBox, "Insured Name");
         clickButton(driver, selectBtnOnEntitySelectListPage, "Select");
-
-        // TODO - Need To add below steps once got confirmaiton on query - Cant
-        // see policy No from Policy No drop down field.
-        /*
-         * In the filter criteria section, click the Policy No dropdown and
-         * Select [Policy number entered in step 3] Click the checkbox next the
-         * Prof Liab coverage Click Save as Claim Possible duplicate claim
-         * screen displays Click Save as Claim Claim No displays in the upper
-         * left corner. Note (and save for later input) the claim number:
-         * ****add ########### Click [Close]
-         */
     }
 
     // Get Client Id from Entity menu pop up flow.
@@ -260,7 +248,6 @@ public class PolicyBinderPage extends CommonAction {
         switchToFrameUsingElement(driver, entityMiniPopupFrameId);
         getPageTitle(driver, "Entity Mini Popup");
         String getClientIdValue = clientId.getAttribute("innerHTML");
-        // TODO - need to store above value in Excel sheet.
         clickButton(driver, entityMiniPopupCloseBtn, "Entity Mini Popup Close");
         switchToParentWindowfromframe(driver);
         return getClientIdValue;
@@ -454,13 +441,6 @@ public class PolicyBinderPage extends CommonAction {
         if (verifyCpatureTxnDetailsPageDisplayedOrNot(getUpdatedPolicyNo) == false) {
             ExtentReporter.logger.log(LogStatus.INFO, "Captursaction details is NOT displayed.");
         }
-
-        /*
-         * switchToFrameUsingElement(driver,
-         * driver.findElement(By.xpath("//iframe[contains(@src,'policyNo=" +
-         * getUpdatedPolicyNo + "')]")));
-         */
-
         switchToFrameUsingElement(driver, entityMiniPopupFrameId);
         ExtentReporter.logger.log(LogStatus.INFO,
                 "Click [OK]. Verify Policy folder shows a new number, Phase show Submission.");
@@ -500,11 +480,6 @@ public class PolicyBinderPage extends CommonAction {
         // Need latest policy number as it changes for TC43769, so policyNo
         // method is
         // called
-        /*
-         * switchToFrameUsingElement(driver,
-         * driver.findElement(By.xpath("//iframe[contains(@src,'policyNo=" +
-         * policyNo() + "')]")));
-         */
         switchToFrameUsingElement(driver, entityMiniPopupFrameId);
         ExtentReporter.logger.log(LogStatus.INFO,
                 "Click [OK]. Verify Policy folder shows a new number, Phase show Submission.");
@@ -543,7 +518,6 @@ public class PolicyBinderPage extends CommonAction {
         sleep(5000);
         switchToFrameUsingElement(driver,
                 driver.findElement(By.xpath("//iframe[contains(@src,'policyNo=" + policyNum + "')]")));
-        // switchToFrameUsingElement(driver,"popupframe1");
         WebDriverWait wait = new WebDriverWait(driver, High);
         wait.until(ExpectedConditions.visibilityOf(selectReason));
         ExtentReporter.logger.log(LogStatus.INFO,

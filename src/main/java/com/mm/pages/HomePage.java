@@ -395,7 +395,6 @@ public class HomePage extends CommonAction {
                         + clientNameFromDataSheet + " is not available in list");
             }
         }
-
         ExtentReporter.logger.log(LogStatus.INFO, "Click Select. Verify Select Policy Type Window displays");
         clickButton(driver, Select_Entity, "Select button");
         switchToParentWindowfromotherwindow(driver, parentWindow);

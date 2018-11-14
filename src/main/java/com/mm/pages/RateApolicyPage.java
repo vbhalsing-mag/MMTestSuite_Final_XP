@@ -27,7 +27,6 @@ public class RateApolicyPage extends CommonAction {
     WebDriver driver;
     RateAPolicyPageDTO rateApolicyPageDTO;
     PolicyIndicationPage policyindicationpage;
-    // PolicyQuotePage policyquotepage = new PolicyQuotePage(this.driver);
     String valueOfPolicyActionAccept = "javascript:acceptQuote();";
     String billingSetup = "javascript:billingSetup();";
     String paymentPlanValue = "659689385";
@@ -506,7 +505,6 @@ public class RateApolicyPage extends CommonAction {
             try {
                 quotepage.searchBackUpPolicyUsingSearchCriteriaBTS_QA();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -581,7 +579,6 @@ public class RateApolicyPage extends CommonAction {
 
     // Screen shot is captured in last step by focusing on imageright app.
     public void ImageRightFocus() {
-        // invisibilityOfLoader(driver);
         sleep(6000);
         ExtentReporter.logger.log(LogStatus.INFO, "Setting focus on ImageRight application.");
         try {
@@ -592,7 +589,6 @@ public class RateApolicyPage extends CommonAction {
             e.printStackTrace();
             ExtentReporter.logger.log(LogStatus.FAIL, "Error while Focusing on ImageRight app");
         }
-        // ProcessBuilder pb = new ProcessBuilder(executionPath);
         captureScreenshot(driver, "ImageRight");
     }
 
@@ -775,7 +771,6 @@ public class RateApolicyPage extends CommonAction {
     public String verifyProductNotifyWindowDisplayed(String PolicyNo) {
         try {
             sleep(10000);
-            // WebDriverWait wait = new WebDriverWait(driver, High);
             switchToFrameUsingElement(driver,
                     driver.findElement(By.xpath("//iframe[contains(@src,'policyNo=" + PolicyNo + "')]")));
             sleep(2000);

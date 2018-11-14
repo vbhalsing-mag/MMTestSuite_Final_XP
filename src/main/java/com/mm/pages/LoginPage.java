@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.mm.utils.CommonAction;
-import com.mm.utils.ExcelUtil;
 import com.mm.utils.ExtentReporter;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -35,8 +34,9 @@ public class LoginPage extends CommonAction {
 
     // Code to login to eOasis application.
     public HomePage loginToeOasis(String UserName, String PassWord) {
-        ExcelUtil exlutil = new ExcelUtil();
-        driver.get(CommonAction.url);// "http://oasiscloud2017t:8081/oas17bts/CS/login.jsp");
+        // Pass the URL to browser
+        driver.get(CommonAction.url);
+        // "http://oasiscloud2017t:8081/oas17bts/CS/login.jsp");
         // driver.get("http://172.18.1.107:9080/magsoasisqa/CS/login.jsp");
         ExtentReporter.logger.log(LogStatus.INFO, "Accessing the URL - " + CommonAction.url);
         driver.manage().deleteAllCookies();

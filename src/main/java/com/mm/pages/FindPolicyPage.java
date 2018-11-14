@@ -324,8 +324,6 @@ public class FindPolicyPage extends CommonAction {
         // and will open/select matching policy.
         boolean flag = false;
         try {
-            List<String> policyList = new ArrayList<String>();
-
             for (int page = 0; page < 10; page++) {
                 // each page shows only four rows in DOM, so we need to change
                 // page to search

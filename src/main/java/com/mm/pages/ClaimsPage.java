@@ -44,8 +44,7 @@ public class ClaimsPage extends CommonAction {
     @FindBy(name = "search")
     WebElement Search_btn;
 
-    @FindBy(xpath = "//span[@id='CCLAIMNO']") // QA
-    // "//span[@id='findPolicyListGrid_CPOLICYNO_0_HREF'
+    @FindBy(xpath = "//span[@id='CCLAIMNO']")
     WebElement policyList;
 
     @FindBy(name = "claim_claimStatusDate")
@@ -478,8 +477,6 @@ public class ClaimsPage extends CommonAction {
         ExtentReporter.logger.log(LogStatus.INFO, "Click Green Change Status button.");
         clickButton(driver, chagneStatus, "Change Status");
         switchToFrameUsingElement(driver, changeFileStatusFrameEle);
-        // getPageTitle(driver, "Change File Status");
-
         // As File Search Page (Claims) having 2 headers Hence instead of using
         // getPageTitle method below logic is written to verify page title.
         List<WebElement> pageheaders = driver.findElements(By.xpath("//div[@class='pageTitle']"));
@@ -550,7 +547,6 @@ public class ClaimsPage extends CommonAction {
         }
         sleep(3000);
         return new ClaimsPage(driver);
-
     }
 
     // Enter data in Claims page.

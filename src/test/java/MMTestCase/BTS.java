@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -101,23 +99,23 @@ public class BTS extends ExtentReporter {
 
     // Extent report initialization before every test case.
     @BeforeMethod(alwaysRun = true)
-    public void Setup(Method method)   {
+    public void Setup(Method method) {
 
         try {
-        Process processkillpdf = Runtime.getRuntime()
-                .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");
-        Process processkillIE = Runtime.getRuntime()
-                .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM iexplore.exe");
-        Process processkillSaveExcel = Runtime.getRuntime()
-                .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM saveExcel.exe");
-        Process processkillCloseExcel = Runtime.getRuntime()
-                .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM Excel.exe");
-        Process processkillImageRight = Runtime.getRuntime().exec(
-                "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM imageright.desktop.exe");
-        Process processkillIEDriverServer = Runtime.getRuntime().exec(
-                "TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /T /IM IEDriverServer.exe");
-        processkillIEDriverServer.waitFor();
-        }catch(Exception e) {
+            Process processkillpdf = Runtime.getRuntime()
+                    .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");
+            Process processkillIE = Runtime.getRuntime()
+                    .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM iexplore.exe");
+            Process processkillSaveExcel = Runtime.getRuntime()
+                    .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM saveExcel.exe");
+            Process processkillCloseExcel = Runtime.getRuntime()
+                    .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM Excel.exe");
+            Process processkillImageRight = Runtime.getRuntime().exec("TASKKILL /F /FI \"USERNAME eq "
+                    + System.getProperty("user.name") + "\" /IM imageright.desktop.exe");
+            Process processkillIEDriverServer = Runtime.getRuntime().exec("TASKKILL /F /FI \"USERNAME eq "
+                    + System.getProperty("user.name") + "\" /T /IM IEDriverServer.exe");
+            processkillIEDriverServer.waitFor();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // This code will create file storage folders if not exists already.
@@ -227,7 +225,7 @@ public class BTS extends ExtentReporter {
     public void TC42238() {
         LoginPageDTO lpDTO;
         LoginPage loginpage;
-        
+
         RateApolicyPage rateapolicyPage = new RateApolicyPage(driver);
         PolicyQuotePage policyquotepage = new PolicyQuotePage(driver);
         ExcelUtil exlUtil = new ExcelUtil();
@@ -552,7 +550,7 @@ public class BTS extends ExtentReporter {
         policyQuotePage.changePolicyPhase(policyQuotePageDTO.policyPhaseValue);
         String policyNo = policyBinderPage.policyNo();
 
-        for (int i = 0; i <=indicationPageDTO.riskTypeValue.size(); i++) {
+        for (int i = 0; i <= indicationPageDTO.riskTypeValue.size(); i++) {
             if (indicationPageDTO.riskTypeValue.get(i).equals(Blank)) {
                 break;
             } else if (indicationPageDTO.riskTypeValue.get(i).equals("Dentist")) {
@@ -567,13 +565,14 @@ public class BTS extends ExtentReporter {
                     .addRetroactiveDate(indicationPageDTO.riskTypeValue.get(i));
         }
         rateapolicypage.rateFunctionalityWithoutPremiumAmountVerification(policyNo).saveOptionOfficial(policyNo);
-        rateapolicypage.AcceptFromActionDropDown().isAlertPresent().identifyPhase(indicationPageDTO.policyPhaseValueBinder)
-                .billingSetup().refreshCurrentPage(driver);
+        rateapolicypage.AcceptFromActionDropDown().isAlertPresent()
+                .identifyPhase(indicationPageDTO.policyPhaseValueBinder).billingSetup().refreshCurrentPage(driver);
         String policyNum = policyBinderPage.policyNo();
         rateapolicypage.rateFunctionality(policyNum).saveOptionOfficial(policyNum);
         rateapolicypage.policyEndorsementwithoutBackupPolicy(policyNum)
-                .identifyPhase(indicationPageDTO.policyPhaseValuePolicy).rateFunctionalityWithoutPremiumAmountVerification(policyNum)
-                .clickPreviewTab(policyNum).savePDF(testcaseFormattedID);
+                .identifyPhase(indicationPageDTO.policyPhaseValuePolicy)
+                .rateFunctionalityWithoutPremiumAmountVerification(policyNum).clickPreviewTab(policyNum)
+                .savePDF(testcaseFormattedID);
         policyQuotePage.saveOptionOfficial(policyNum);
     }
 

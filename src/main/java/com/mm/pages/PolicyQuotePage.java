@@ -196,7 +196,6 @@ public class PolicyQuotePage extends CommonAction {
             try {
                 searchBackUpPolicyUsingSearchCriteriaBTS_QA();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             pbp.copyToQuoteFromActionDropDownwithoutBackUpPolicy(pbp.policyNo());
@@ -365,19 +364,7 @@ public class PolicyQuotePage extends CommonAction {
 
     public PolicyQuotePage saveOptionOfficial(String PolicyNo) {
         RateApolicyPage rateapolicypage = new RateApolicyPage(driver);
-
-        /*
-         * Note- PDF process kill and refresh page code is added because IE
-         * faces issue intermittently after PDF generation.
-         */
         rateapolicypage.refreshCurrentPage(driver);
-        try {
-            Process processkillpdf = Runtime.getRuntime()
-                    .exec("TASKKILL /F /FI \"USERNAME eq " + System.getProperty("user.name") + "\" /IM savePdf.exe");
-        } catch (Exception e) {
-            e.printStackTrace();
-            ExtentReporter.logger.log(LogStatus.WARNING, "Error while killing pdf process in SaveOption.");
-        }
         saveOption(driver, saveOptionBtn, saveAsDropDown, saveOptionOkBtn, exitOK,
                 policyquotepageDTO.saveAsPolicyValueOfficial, PolicyNo);
         return new PolicyQuotePage(driver);

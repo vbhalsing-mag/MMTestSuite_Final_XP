@@ -26,7 +26,6 @@ public class PDFReader extends CommonAction {
 
     // AUTOIT script execution to save PDF.
     public PDFReader savePDF(String FileName) {
-        // invisibilityOfLoader(driver);
         sleep(6000);
         ExtentReporter.logger.log(LogStatus.INFO,
                 "Click the Save button on the PDF to save the results & verify PDF is saved");

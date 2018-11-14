@@ -88,7 +88,6 @@ public class PolicySubmissionPage extends CommonAction {
     public PolicyIndicationPage updatePolicyDetails() {
         sleep(10000);
         invisibilityOfLoader(driver);
-        // TODO-getPageTitle(driver, expectedPageTitle)
         // Change policy type to Indication and add organization type as
         // Hospital from DDL
         ExtentReporter.logger.log(LogStatus.INFO,

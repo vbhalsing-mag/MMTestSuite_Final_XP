@@ -364,8 +364,6 @@ public class PolicyIndicationPage extends CommonAction {
                     "Use drop down menu to select Name. Verify Underwriter name is displayed");
             selectDropdownByVisibleText(driver, Underwriter_name,
                     hospitalIndicationDTO.teamMembername.get(underwritercount), "Underwriter team member name");
-            // Verify the Under writer name value is selected and it is correct
-
             sleep(1000);
             clickButton(driver, Save_Underwritter, "Save button");
         }
@@ -388,9 +386,7 @@ public class PolicyIndicationPage extends CommonAction {
             if (hospitalIndicationDTO.underwriterName.get(underwritercount).equals(Blank)) {
                 break;
             }
-
             ExtentReporter.logger.log(LogStatus.INFO, "Click Add Underwriter. Verify Add Underwriter window displayed");
-            // waitForElementToLoad(driver, 30, Add_Underwriter);
             // Open Add underwriter tab from the first pop up frame and move to
             // second pop up frame using list
             clickButton(driver, Add_Underwriter, "Add Underwriter");
@@ -423,8 +419,6 @@ public class PolicyIndicationPage extends CommonAction {
                     "Use drop down menu to select Name. Verify Underwriter name is displayed");
             selectDropdownByVisibleText(driver, Underwriter_name,
                     hospitalIndicationDTO.teamMembername.get(underwritercount), "Underwriter team member name");
-            // Verify the Under writer name value is selected and it is correct
-
             sleep(1000);
             clickButton(driver, Save_Underwritter, "Save button");
             captureTransactionDetailsForQA(policyNo);
@@ -633,7 +627,7 @@ public class PolicyIndicationPage extends CommonAction {
                 clickButton(driver, nextPageForRiskTypeList, "Next Page Arrow");
                 sleep(3000);
             }
-            //Search and select riskType from pop up
+            // Search and select riskType from pop up
             for (int j = 0; j < riskTypeList.size(); j++) {
 
                 String riskTypeFromApplication = riskTypeList.get(j).getAttribute("innerHTML").trim();
@@ -1208,7 +1202,7 @@ public class PolicyIndicationPage extends CommonAction {
         return nextYear;
     }
 
-    // Add retro date from Eff Date column
+    // Add retro date from Effe Date column
     public PolicyIndicationPage addRetroactiveDate(String riskTypeValue) {
         sleep(3000);
         // Get the system current date
