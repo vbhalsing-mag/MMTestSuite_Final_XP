@@ -96,7 +96,7 @@ public class QA extends ExtentReporter {
         createReportFolder(this.getClass().getSimpleName());
     }
 
-    // Extent report initialization before every test case.
+    // Extent report initialization and user specific process kill before every test case.
     @BeforeMethod(alwaysRun = true)
     public void Setup(Method method)   {
         try {
@@ -341,8 +341,7 @@ public class QA extends ExtentReporter {
         policyQuotePage.changePolicyPhase(policyQuotePageDTO.policyPhaseValue);
         String policyNo = policyBinderPage.policyNo();
 
-        for (int i = 0; i < indicationPageDTO.riskTypeValue.size(); i++) {
-
+        for (int i = 0; i <=indicationPageDTO.riskTypeValue.size(); i++) {
             if (indicationPageDTO.riskTypeValue.get(i).equals(Blank)) {
                 break;
             } else if (indicationPageDTO.riskTypeValue.get(i).equals("Dentist")) {
@@ -566,6 +565,7 @@ public class QA extends ExtentReporter {
     }
 
     // Known issue.- It needs special user privilege to change policy status.
+    //Change priority once issue is resolved 
     @Test(description = "QA Hospital Claim - Verify Change Claim Status", groups = {
             "QA Smoke Test" }, priority = 22, alwaysRun = true)
     public void TC43784() {

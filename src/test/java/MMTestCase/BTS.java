@@ -156,8 +156,8 @@ public class BTS extends ExtentReporter {
         CommonAction.url = applicationUrl;// "http://oasiscloud2017t:8081/oas17bts/CS/login.jsp";
     }
 
-    /*@Test(description = "Rate a policy that existed before the change or deployment to confirm it still displays as expected", groups = {
-            "BTS Smoke Test" }, priority = 0, alwaysRun = true)*/
+    @Test(description = "Rate a policy that existed before the change or deployment to confirm it still displays as expected", groups = {
+            "BTS Smoke Test" }, priority = 0, alwaysRun = true)
 
     public void TC42239() {
         LoginPageDTO lpDTO = new LoginPageDTO(TestCaseDetails.testDataDictionary);
@@ -169,9 +169,9 @@ public class BTS extends ExtentReporter {
         rateapolicyPage.rateFunctionality(policyNum);
     }
 
-   /* @Test(description = "This test case will cover smoke test for Hospital(BTS) CIS\r\n" + "Verify CIS opens \r\n"
+    @Test(description = "This test case will cover smoke test for Hospital(BTS) CIS\r\n" + "Verify CIS opens \r\n"
             + "Search an entity/person\r\n"
-            + "Navigate through the CIS screens", groups = { "BTS Smoke Test" }, priority = 1, alwaysRun = true)*/
+            + "Navigate through the CIS screens", groups = { "BTS Smoke Test" }, priority = 1, alwaysRun = true)
 
     public void TC42253() {
         LoginPageDTO lpDTO = new LoginPageDTO(TestCaseDetails.testDataDictionary);
@@ -341,7 +341,7 @@ public class BTS extends ExtentReporter {
                 .verifyPdfContent(testcaseFormattedID);
     }
 
-    @Test(description = "Hospital Verify Interactive Form", groups = {
+    @Test(description = "QA Hospital Verify Interactive Form", groups = {
             "BTS Smoke Test" }, priority = 10, alwaysRun = true)
     public void TC42247() {
         LoginPageDTO lpDTO = new LoginPageDTO(TestCaseDetails.testDataDictionary);
@@ -552,14 +552,12 @@ public class BTS extends ExtentReporter {
         policyQuotePage.changePolicyPhase(policyQuotePageDTO.policyPhaseValue);
         String policyNo = policyBinderPage.policyNo();
 
-        for (int i = 0; i < indicationPageDTO.riskTypeValue.size(); i++) {
-
+        for (int i = 0; i <=indicationPageDTO.riskTypeValue.size(); i++) {
             if (indicationPageDTO.riskTypeValue.get(i).equals(Blank)) {
                 break;
             } else if (indicationPageDTO.riskTypeValue.get(i).equals("Dentist")) {
                 policyIndicationPage.openLimitSharingTab(policyNo).addSharedGroup(policyNo).closeLimitSharingtab();
             }
-
             policyIndicationPage.selectRiskTab()
                     .selectRiskTypeFromPopupWindowAndSelectEntity(policyNo, indicationPageDTO.riskTypeValue.get(i),
                             indicationPageDTO.riskEntityName.get(i))
@@ -568,13 +566,13 @@ public class BTS extends ExtentReporter {
                     .selectCoverageTab().selectCoverageFromCoverageList()
                     .addRetroactiveDate(indicationPageDTO.riskTypeValue.get(i));
         }
-        rateapolicypage.rateFunctionality(policyNo).saveOptionOfficial(policyNo);
-        rateapolicypage.AcceptFromActionDropDown().isAlertPresent().identifyPhase(indicationPageDTO.policyPhaseValue)
+        rateapolicypage.rateFunctionalityWithoutPremiumAmountVerification(policyNo).saveOptionOfficial(policyNo);
+        rateapolicypage.AcceptFromActionDropDown().isAlertPresent().identifyPhase(indicationPageDTO.policyPhaseValueBinder)
                 .billingSetup().refreshCurrentPage(driver);
         String policyNum = policyBinderPage.policyNo();
         rateapolicypage.rateFunctionality(policyNum).saveOptionOfficial(policyNum);
         rateapolicypage.policyEndorsementwithoutBackupPolicy(policyNum)
-                .identifyPhase(indicationPageDTO.policyPhaseValue2).rateFunctionality(policyNum)
+                .identifyPhase(indicationPageDTO.policyPhaseValuePolicy).rateFunctionalityWithoutPremiumAmountVerification(policyNum)
                 .clickPreviewTab(policyNum).savePDF(testcaseFormattedID);
         policyQuotePage.saveOptionOfficial(policyNum);
     }
